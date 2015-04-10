@@ -3,9 +3,24 @@
   "version": "0.1.0",
   "description": "Grokible Javascript Utility Library",
   "main": "index.js",
+  "dependencies": {
+    "requirejs": ">= 2.1.x"
+  },
+  "devDependencies": {
+    "mocha": ">= 2.0.x",
+    "chai": ">= 2.2.x"
+  },
   "scripts": {
     "test": "mocha"
   },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/grokible/grokible-utils-js.git"
+  },
   "author": "roger@grokible.com",
-  "license": "ISC"
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/grokible/grokible-utils-js/issues"
+  },
+  "homepage": "https://github.com/grokible/grokible-utils-js"
 }

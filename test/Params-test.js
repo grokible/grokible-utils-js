@@ -2,11 +2,13 @@
 var requirejs = require ('requirejs');
 var expect = require ('chai').expect;
 
+var baseUrl = process.cwd () + "/lib";
+
 requirejs.config ({
     nodeRequire: require,
-    baseUrl : process.cwd (),
+    baseUrl : baseUrl,
     paths : {
-        Params : 'lib/grokible-utils/Params'
+        Params : 'Params'
     }
 });
 

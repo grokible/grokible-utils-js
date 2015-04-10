@@ -1,0 +1,11 @@
+{
+  "name": "grokible-utils-js",
+  "version": "0.1.0",
+  "description": "Grokible Javascript Utility Library",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha"
+  },
+  "author": "roger@grokible.com",
+  "license": "ISC"
+}

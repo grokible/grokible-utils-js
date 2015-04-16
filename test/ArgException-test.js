@@ -1,23 +1,14 @@
 
 var requirejs = require ('requirejs');
 var expect = require ('chai').expect;
-var assert = require ('chai').assert;
+var TestSetup = require ('Local/TestSetup');
 
-var baseUrl = process.cwd () + "/lib";
+var libs = TestSetup.configRequireJsLibs
+    (['ArgException', 'CheckException',  'TestExpect']);
 
-requirejs.config ({
-    nodeRequire: require,
-    baseUrl : baseUrl,
-    paths : {
-        ArgException : 'ArgException',
-        CheckException : 'CheckException',
-        TestExpect : 'TestExpect'
-    }
-});
+// Eval to define libraries in scoped vars
+for (k in libs) { var s = "var " + k + " = libs ['" + k + "'];"; eval (s); }
 
-var ArgException = requirejs ('ArgException');
-var CheckException = requirejs ('CheckException');
-var TestExpect = requirejs ('TestExpect');
 
 describe ("ArgException class", function () {
 

@@ -1,7 +1,6 @@
 
 var requirejs = require ('requirejs');
 var expect = require ('chai').expect;
-var assert = require ('chai').assert;
 var TestSetup = require ('Local/TestSetup');
 
 var libs = TestSetup.configRequireJsLibs
@@ -9,12 +8,8 @@ var libs = TestSetup.configRequireJsLibs
       'TestExpect', 'Exception', 'ArgException']);
 
 
-// Eval "var Lib = libs ['Lib'];" to define libraries in scoped vars
-
-for (k in libs) {
-    var s = "var " + k + " = libs ['" + k + "'];";
-    eval (s);
-}
+// Eval to define libraries in scoped vars
+for (k in libs) { var s = "var " + k + " = libs ['" + k + "'];"; eval (s); }
 
 describe ("Check library", function () {
 

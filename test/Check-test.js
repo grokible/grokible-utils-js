@@ -2,28 +2,19 @@
 var requirejs = require ('requirejs');
 var expect = require ('chai').expect;
 var assert = require ('chai').assert;
+var TestSetup = require ('Local/TestSetup');
 
-var baseUrl = process.cwd () + "/lib";
+var libs = TestSetup.configRequireJsLibs
+    (['CheckException', 'ProgrammingError', 'Check',
+      'TestExpect', 'Exception', 'ArgException']);
 
-requirejs.config ({
-    nodeRequire: require,
-    baseUrl : baseUrl,
-    paths : {
-        CheckException : 'CheckException',
-        ProgrammingError : 'ProgrammingError',
-        Check : 'Check',
-        Exception : 'Exception',
-        ArgException : 'ArgException'
-    }
-});
 
-var Check = requirejs ('Check');
-var CheckException = requirejs ('CheckException');
-var ProgrammingError = requirejs ('ProgrammingError');
+// Eval "var Lib = libs ['Lib'];" to define libraries in scoped vars
 
-var Exception = requirejs ('Exception');
-var ArgException = requirejs ('ArgException');
-
+for (k in libs) {
+    var s = "var " + k + " = libs ['" + k + "'];";
+    eval (s);
+}
 
 describe ("Check library", function () {
 
@@ -38,30 +29,32 @@ describe ("Check library", function () {
 
     describe ("hasSamePrototype (obj, obj2)", function () {
         it ("should throw exc if obj does not have same prototype", function () {
-            var exc = new Exception ("hello");
-            var thrown = false;
-            try {
-                Check.hasSamePrototype ({}, Exception);
-            } catch (e) {
-                thrown = true;
-                expect (e).instanceOf (CheckException);
-            }
-            assert (thrown, "Exception was not thrown");
+           TestExpect.throws (function () { Check.hasSamePrototype ({}, Exception) }, CheckException);
         });
     });
 
 
     describe ("hasSamePrototype (obj, obj2)", function () {
         it ("should throw exc of type optExceptionConstructor if obj does not have same prototype", function () {
-            var exc = new Exception ("hello");
-            var thrown = false;
-            try {
-                Check.hasSamePrototype ({}, Exception, ArgException);
-            } catch (e) {
-                thrown = true;
-                expect (e).instanceOf (ArgException);
-            }
-            assert (thrown, "Exception was not thrown");
+            TestExpect.throws (function () { Check.hasSamePrototype ({}, Exception, ArgException) }, CheckException);
+        });
+    });
+
+    describe ("isInteger", function () {
+        it ("should throw exception on non-integer", function () {
+           TestExpect.throws (function () { Check.isInteger (1.1) }, CheckException);
+        });
+    });
+
+    describe ("isInteger", function () {
+        it ("should throw exception on non-number (e.g. string)", function () {
+           TestExpect.throws (function () { Check.isInteger ("hello") }, CheckException);
+        });
+    });
+
+    describe ("isInteger", function () {
+        it ("should not throw exception on integer", function () {
+            Check.isInteger (0);
         });
     });
 

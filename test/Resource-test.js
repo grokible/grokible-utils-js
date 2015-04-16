@@ -10,6 +10,7 @@ requirejs.config ({
     paths : {
         Params : 'Params',
         Check : 'Check',
+        Resource : 'Resource',
         TestExpect : 'TestExpect',
         CheckException : 'CheckException'
     }
@@ -30,16 +31,10 @@ describe ("Resource class", function () {
 
     describe ("constructor ({ port : <non-integer> })", function () {
         it ("should throw a CheckException", function () {
-            var thrown = false;
-            try {
-                var r = new Resource ({ port : "s" });
-            } catch (e) {
-                thrown = true;
-                expect (e).instanceOf (CheckException);
-            }
-            expect (thrown).to.equal (true);
+            TestExpect.throws (function () { new Resource ({ port : "s" }) }, CheckException);
         });
     });
+
 
 });
 

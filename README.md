@@ -2,15 +2,11 @@
 
 Low-level Javascript Library
 
-Grokible utils are a low-level js utility library.  I imagine many js
-authors start with some base set of their own utilities - well this is
-my start of those.
+Grokible utils are a low-level js utility library.
 
-The intent is to have simple, modular, no dependency js that can
-be used both on the front end and on the backend in node modules
-(the unit tests show how to mix the requirejs and require statements).
-The initial use-case is making REST calls, which is about as fundamental
-as one can get.
+My intent is to have a simple, modular, no dependency js library
+that can be used, without modifications to the source, both on the
+front end in the browser and on the backend in node modules.
 
 On the one hand I am developing these as an exercise to perfect my js
 style, but on the other hand, I fully expect this to be a nice, usable,

@@ -9,18 +9,23 @@
   "devDependencies": {
     "browserify": "^9.0.8",
     "chai": ">= 2.2.x",
+    "glob": "^5.0.5",
+    "glob-array": "^0.1.2",
+    "gulp-changed": "^1.2.1",
     "gulp-clean": "^0.3.1",
     "gulp-dest": "^0.2.2",
+    "gulp-karma": "0.0.4",
+    "gulp-mocha": "^2.0.1",
     "gulp-rename": "^1.2.2",
     "gulp-watch": "^4.2.4",
     "karma-chai": "^0.1.0",
     "karma-chrome-launcher": "^0.1.8",
     "karma-mocha": "^0.1.10",
     "karma-requirejs": "^0.2.2",
+    "mkdirp": "^0.5.0",
     "mocha": ">= 2.0.x",
     "vinyl-buffer": "^1.0.0",
-    "vinyl-source-stream": "^1.1.0",
-    "vinyl-transform": "^1.0.0"
+    "vinyl-source-stream2": "^0.1.1"
   },
   "scripts": {
     "test": "mocha"

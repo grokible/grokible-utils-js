@@ -1,16 +1,13 @@
+'use strict';
 
+var Check = require ('Check');
 
-var requirejs = require ('requirejs');
 var expect = require ('chai').expect;
-var TestSetup = require ('Local/TestSetup');
-
-var libs = TestSetup.configRequireJsLibs
-    (['CheckException', 'ArgTypeException', 'Check',
-      'TestExpect', 'Exception', 'ArgException']);
-
-
-// Eval to define libraries in scoped vars
-for (k in libs) { var s = "var " + k + " = libs ['" + k + "'];"; eval (s); }
+var TestExpect = require ('TestExpect');
+var Exception = require ('Exception');
+var ArgTypeException = require ('ArgTypeException');
+var ArgException = require ('ArgException');
+var CheckException = require ('CheckException');
 
 describe ("Check (lib)", function () {
 
@@ -24,69 +21,103 @@ describe ("Check (lib)", function () {
     });
 
     describe ("hasSamePrototype (obj, obj2)", function () {
-        it ("should throw exc if obj does not have same prototype", function () {
-           TestExpect.throws (function () { Check.hasSamePrototype ({}, Exception) }, CheckException);
+        it ("should throw exc if does not have same prototype", function () {
+           TestExpect.throws (function () { Check.hasSamePrototype
+               ({}, Exception) }, CheckException);
         });
     });
 
     describe ("hasSamePrototype (obj, obj2, optThrows=false)", function () {
         it ("should not throw if optThrows=false", function () {
-            expect (Check.hasSamePrototype ({}, Exception, false)).to.equal (false);
+            expect (Check.hasSamePrototype ({}, Exception,
+               false)).to.equal (false);
 
             var exc = new Exception ("hello");
-            expect (Check.hasSamePrototype (exc, Exception, false)).to.equal (true);
+            expect (Check.hasSamePrototype (exc, Exception, false))
+                .to.equal (true);
         });
     });
 
-    describe ("hasSamePrototype (obj, <badval>, optThrows=false)", function () {
-        it ("should throw if optThrows=false, if second arg bad (programming error)", function () {
-            TestExpect.throws (function () { Check.hasSamePrototype ({}, undefined, false) }, ArgTypeException);
-            TestExpect.throws (function () { Check.hasSamePrototype ({}, null, false) }, ArgTypeException);
+    describe ("hasSamePrototype (obj, <badval>, optThrows=false)",
+    function () {
+        it ("should throw if optThrows=false, if second " + 
+            "arg bad (programming error)", function () {
+
+            TestExpect.throws (function () { Check.hasSamePrototype
+                ({}, undefined, false) }, ArgTypeException);
+
+            TestExpect.throws (function () { Check.hasSamePrototype
+                ({}, null, false) }, ArgTypeException);
 
             var obj2 = {};
             obj2.prototype = null;
-            TestExpect.throws (function () { Check.hasSamePrototype ({}, obj2, false) }, ArgTypeException);
-
+            TestExpect.throws (function () { Check.hasSamePrototype
+                ({}, obj2, false) }, ArgTypeException);
+ 
             obj2.prototype = undefined;
-            TestExpect.throws (function () { Check.hasSamePrototype ({}, obj2, false) }, ArgTypeException);
+            TestExpect.throws (function () { Check.hasSamePrototype
+                ({}, obj2, false) }, ArgTypeException);
         });
     });
 
+    describe ("hasSamePrototype (<badval>, obj2, optThrows=false)",
+    function () {
+        it ("should never throw if optThrows=false, even if first arg is bad",
+        function () {
 
-    describe ("hasSamePrototype (<badval>, obj2, optThrows=false)", function () {
-        it ("should never throw if optThrows=false, even if first arg is bad", function () {
-            expect (Check.hasSamePrototype (null, Exception, false)).to.equal (false);
-            expect (Check.hasSamePrototype (undefined, Exception, false)).to.equal (false);
-            expect (Check.hasSamePrototype (1, Exception, false)).to.equal (false);
-            expect (Check.hasSamePrototype ("hello", Exception, false)).to.equal (false);
-            expect (Check.hasSamePrototype ([ ], Exception, false)).to.equal (false);
-            expect (Check.hasSamePrototype ({ }, Exception, false)).to.equal (false);
+            expect (Check.hasSamePrototype
+                (null, Exception, false)).to.equal (false);
+
+            expect (Check.hasSamePrototype
+                (undefined, Exception, false)).to.equal (false);
+            expect (Check.hasSamePrototype (1, Exception, false)).to.equal
+                (false);
+            expect (Check.hasSamePrototype
+                ("hello", Exception, false)).to.equal (false);
+            expect (Check.hasSamePrototype ([ ], Exception, false)).to.equal
+                (false);
+            expect (Check.hasSamePrototype ({ }, Exception, false)).to.equal
+                (false);
 
             var obj = {};
             obj.prototype = null;
-            expect (Check.hasSamePrototype (obj, Exception, false)).to.equal (false);
+            expect (Check.hasSamePrototype (obj, Exception, false)).to.equal
+                (false);
 
             obj.prototype = undefined;
-            expect (Check.hasSamePrototype (obj, Exception, false)).to.equal (false);
+            expect (Check.hasSamePrototype (obj, Exception, false)).to.equal
+                (false);
         });
     });
 
-
     describe ("hasSamePrototype (obj, obj2)", function () {
-        it ("should throw exc of type optExceptionConstructor if obj does not have same prototype", function () {
-            TestExpect.throws (function () { Check.hasSamePrototype ({}, Exception, true, ArgException) }, CheckException);
+        it ("should throw exc of type optExceptionCtor if obj does "
+            + "not have same prototype", function () {
+
+            TestExpect.throws (function () {
+                Check.hasSamePrototype ({}, Exception, true, ArgException)
+            }, CheckException);
+
         });
     });
 
     describe ("isInteger", function () {
         it ("should throw exception on non-integer", function () {
-           TestExpect.throws (function () { Check.isInteger (1.1) }, CheckException);
+
+           TestExpect.throws (function () {
+               Check.isInteger (1.1)
+           }, CheckException);
+
         });
     });
 
     describe ("isInteger", function () {
         it ("should throw exception on non-number (e.g. string)", function () {
-           TestExpect.throws (function () { Check.isInteger ("hello") }, CheckException);
+
+           TestExpect.throws (function () {
+               Check.isInteger ("hello")
+           }, CheckException);
+
         });
     });
 
@@ -111,18 +142,23 @@ describe ("Check (lib)", function () {
         });
     });
 
+
     describe ("hasClassOfObject (Exception)", function () {
         it ("should throw CheckException", function () {
            var exc = new Exception ("hello");
-           TestExpect.throws (function () { Check.hasClassOfObject (exc) }, CheckException);
+           TestExpect.throws (function () { Check.hasClassOfObject (exc) },
+               CheckException);
         });
     });
 
     describe ("instanceOf (<something that isA Error>, Error)", function () {
         it ("should be ok", function () {
-           expect (Check.instanceOf (new Exception ("hello"), Error)).to.equal (true);
-           expect (Check.instanceOf (new CheckException ("hello"), Error)).to.equal (true);
-           expect (Check.instanceOf (new Error ("boo"), Error)).to.equal (true);
+           expect (Check.instanceOf (new Exception ("hello"), Error)).to.equal
+               (true);
+           expect (Check.instanceOf
+               (new CheckException ("hello"), Error)).to.equal (true);
+           expect (Check.instanceOf (new Error ("boo"), Error)).to.equal
+               (true);
         });
     });
 
@@ -135,31 +171,50 @@ describe ("Check (lib)", function () {
 
     describe ("instanceOf (<not an Exception), Exception)", function () {
         it ("should throw", function () {
-           TestExpect.throws (function () { Check.instanceOf (new Error (), Exception) }, CheckException);
 
-           // set returned exception type from default (CheckException) to Exception
-           TestExpect.throws (function () { Check.instanceOf (new Error (), Exception, Exception) }, Exception);
+           TestExpect.throws (function () {
+               Check.instanceOf (new Error (), Exception)
+           }, CheckException);
+
+           // Set returned exc type from default (CheckException) to Exception
+
+           TestExpect.throws (function () {
+               Check.instanceOf (new Error (), Exception, Exception)
+           }, Exception);
+
         });
     });
 
     describe ("instanceOf (<not an Object), Object)", function () {
         it ("should throw", function () {
-           TestExpect.throws (function () { Check.instanceOf (1.0, Object) }, CheckException);
-           TestExpect.throws (function () { Check.instanceOf (undefined, Object) }, CheckException);
 
-           // N.B. how we are different here than vanilla Javascript expectations as null is an Object
-           //      in Javascript.
-           TestExpect.throws (function () { Check.instanceOf (null, Object) }, CheckException);
+           TestExpect.throws (function () {
+               Check.instanceOf (1.0, Object)
+           }, CheckException);
+
+           TestExpect.throws (function () {
+               Check.instanceOf (undefined, Object)
+           }, CheckException);
+
+           // N.B. how we are different here than vanilla Javascript
+           // expectations as null is an Object in Javascript.
+
+           TestExpect.throws (function () {
+               Check.instanceOf (null, Object)
+           }, CheckException);
         });
     });
 
     describe ("instanceOf (<something>, <bad edge case>)", function () {
         it ("should throw ArgTypeException", function () {
-           TestExpect.throws (function () { Check.instanceOf (new Error (), {}) }, ArgTypeException);
-           TestExpect.throws (function () { Check.instanceOf (new Error (), 1) }, ArgTypeException);
-           Check.instanceOf (new Error (), 1) }, ArgTypeException);
+
+            TestExpect.throws (function () {
+                Check.instanceOf (new Error (), {})
+            }, ArgTypeException);
+
+            TestExpect.throws (function () {
+                Check.instanceOf (new Error (), 1)
+            }, ArgTypeException);
         });
     });
-
 });
-

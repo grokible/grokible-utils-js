@@ -1,12 +1,12 @@
+'use strict';
 
 var expect = require ('chai').expect;
 var assert = require ('chai').assert;
 
-var baseUrl = process.cwd () + "/lib";
+var Describe = require ('Describe');
 
-var Describe = require ('Local/Describe');
-
-// TODO pass an object with no constructor through, and an object with a nameless constructor through
+// TODO pass an object with no constructor through, and an object
+// with a nameless constructor through
 
 describe ("Describe library", function () {
 

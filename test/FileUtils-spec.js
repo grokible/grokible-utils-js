@@ -1,13 +1,9 @@
+'use strict';
+
+var FileUtils = require ('FileUtils');
 
 var expect = require ('chai').expect;
 var assert = require ('chai').assert;
-
-var sys = require ('sys');
-var exec = require ('child_process').exec;
-
-function puts (error, stdout, stderr) { sys.puts (stdout) }
-
-var FileUtils = require ('Local/FileUtils');
 
 describe ("FileUtils library", function () {
 

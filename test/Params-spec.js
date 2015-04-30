@@ -1,23 +1,12 @@
 
-var requirejs = require ('requirejs');
 var expect = require ('chai').expect;
-
-var baseUrl = process.cwd () + "/lib";
-
-requirejs.config ({
-    nodeRequire: require,
-    baseUrl : baseUrl,
-    paths : {
-        Params : 'Params'
-    }
-});
-
-var Params = requirejs ('Params');
+var Params = require ('Params');
 
 describe ("Params class", function () {
 
     describe ("constructor (config)", function () {
-        it ("should set internal config and leave targetObject undefined", function () {
+        it ("should set internal config and leave targetObject undefined",
+        function () {
             var pm = new Params ({ hello : "world" });
             var config = pm.getConfig ();
             expect (config).to.have.a.property ('hello', 'world');
@@ -38,8 +27,8 @@ describe ("Params class", function () {
     });
 
     describe ("copy (key)", function () {
-        it ("case 1:  should set object property to same value in config, prefixed by '_'", function () {
-            debugger;
+        it ("case 1:  should set obj prop to same value in conf, _ prefixed",
+        function () {
             var obj = {};
             var pm = new Params ({ hello : "world", what : "else" }, obj);
             var x = pm.copy ('hello');
@@ -50,8 +39,8 @@ describe ("Params class", function () {
     });
 
     describe ("copy (key)", function () {
-        it ("case 2:  should not set object property if it isn't in config, and return undefined", function () {
-            debugger;
+        it ("case 2:  should not set obj prop if it isn't in conf, ret undef",
+        function () {
             var obj = {};
             var pm = new Params ({ hello : "world", what : "else" }, obj);
             var x = pm.copy ('missing');
@@ -60,10 +49,9 @@ describe ("Params class", function () {
         });
     });
 
-
     describe ("copy (key, optDefault)", function () {
-        it ("case 1:  should set object property to same value in config, prefixed by '_'", function () {
-            debugger;
+        it ("case 1:  should set obj prop to same value in conf, _ prefixed",
+        function () {
             var obj = {};
             var pm = new Params ({ hello : "world", what : "else" }, obj);
             var x = pm.copy ('hello', 'why not');
@@ -75,8 +63,8 @@ describe ("Params class", function () {
 
 
     describe ("copy (key, optDefault)", function () {
-        it ("case 2:  should set object property to default if key/value not present", function () {
-            debugger;
+        it ("case 2:  should set obj prop to default if key/value not there",
+        function () {
             var obj = {};
             var pm = new Params ({ hello : "world", what : "else" }, obj);
             var x = pm.copy ('missing', 'why not');

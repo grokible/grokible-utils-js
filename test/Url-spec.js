@@ -1,13 +1,9 @@
 
-var requirejs = require ('requirejs');
+var Url = require ('Url');
+
 var expect = require ('chai').expect;
-var TestSetup = require ('Local/TestSetup');
-
-var libs = TestSetup.configRequireJsLibs
-    (['Params', 'Check', 'Url', 'TestExpect', 'CheckException']);
-
-// Eval to define libraries in scoped vars
-for (k in libs) { var s = "var " + k + " = libs ['" + k + "'];"; eval (s); }
+var TestExpect = require ('TestExpect');
+var CheckException = require ('CheckException');
 
 describe ("Url class", function () {
 
@@ -37,13 +33,17 @@ describe ("Url class", function () {
 
 
     describe ("constructor ({ port : <non-integer> })", function () {
-        it ("should throw a CheckException due to non-integer port settting", function () {
-            TestExpect.throws (function () { new Url ({ port : "s" }) }, CheckException);
+        it ("should throw a CheckException due to non-integer port settting",
+        function () {
+            TestExpect.throws (function () {
+                new Url ({ port : "s" })
+            }, CheckException);
         });
     });
 
     describe ("setScheme ('https')", function () {
-        it ("should set internal scheme to https, and have it affect URL", function () {
+        it ("should set internal scheme to https, and have it affect URL",
+        function () {
             var r = new Url ();
             r.setScheme ("https");
 
@@ -51,6 +51,7 @@ describe ("Url class", function () {
             expect (r.getUrl ()).to.equal ("https://localhost/");
         });
     });
+
 
 });
 

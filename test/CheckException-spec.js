@@ -1,13 +1,10 @@
+'use strict';
 
-var requirejs = require ('requirejs');
+var CheckException = require ('CheckException');
+
 var expect = require ('chai').expect;
-var TestSetup = require ('Local/TestSetup');
-
-var libs = TestSetup.configRequireJsLibs (['Exception', 'CheckException', 'TestExpect']);
-
-// Eval to define libraries in scoped vars
-for (k in libs) { var s = "var " + k + " = libs ['" + k + "'];"; eval (s); }
-
+var TestExpect = require ('TestExpect');
+var Exception = require ('Exception');
 
 describe ("CheckException class", function () {
 
@@ -15,7 +12,8 @@ describe ("CheckException class", function () {
         it ("should set message and inherit from Error", function () {
             var exc = new CheckException ("hello");
 
-            TestExpect.inherits (exc, CheckException, Exception, { name: "CheckException", message: "hello" });
+            TestExpect.inherits (exc, CheckException, Exception,
+                { name: "CheckException", message: "hello" });
         });
     });
 

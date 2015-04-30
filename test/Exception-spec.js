@@ -1,10 +1,9 @@
 'use strict';
 
-var requirejs = require ('requirejs');
-var expect = require ('chai').expect;
+var Exception = require ('Exception');
 
-var Exception = require ('Local/Exception');
-var TestExpect = require ('Local/TestExpect');
+var expect = require ('chai').expect;
+var TestExpect = require ('TestExpect');
 
 describe ("Exception class", function () {
     describe ("constructor (message)", function () {

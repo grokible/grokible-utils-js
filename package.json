@@ -4,7 +4,6 @@
   "description": "Grokible Javascript Utility Library",
   "main": "index.js",
   "dependencies": {
-    "requirejs": ">= 2.1.x"
   },
   "devDependencies": {
     "browserify": "^9.0.8",

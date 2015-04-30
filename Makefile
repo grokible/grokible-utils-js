@@ -5,7 +5,9 @@
 BUILD_DIR=build
 TEST_DIR=test
 
-TEST_SRCS=Describe-spec.js Exception-spec.js
+TEST_SRCS=Describe-spec.js Exception-spec.js ArgException-spec.js \
+    CheckException-spec.js Check-spec.js
+
 TESTS=$(addprefix $(TEST_DIR)/, $(TEST_SRCS))
 
 

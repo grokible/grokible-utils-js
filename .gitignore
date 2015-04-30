@@ -1,3 +1,12 @@
 TODO
 *~
-node_modules
+templates
+
+# Any flat .js file in node_modules is assumed to be a local
+# .js library file that is under development in the local
+# project (these should be symlinks to actual file in ../lib)
+
+node_modules/*
+!node_modules/*.js
+
+

@@ -1,6 +1,8 @@
 TODO
 *~
 templates
+build
+.idea
 
 # Any flat .js file in node_modules is assumed to be a local
 # .js library file that is under development in the local

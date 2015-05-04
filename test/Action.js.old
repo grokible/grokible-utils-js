@@ -1,0 +1,41 @@
+'use strict';
+
+var Action = require ('Action');
+
+var expect = require ('chai').expect;
+var Url = require ('Url');
+
+var request = require ('request');
+
+describe ("Action Class", function () {
+    describe ("constructor ()", function () {
+        it ("should set object properties to defaults", function () {
+            var url = new Url ();
+            var action = new Action ({ url: url });
+            expect (action.getMethod ()).to.equal ('get');
+        });
+    });
+
+    describe ("request", function () {
+        it ("should do some shit", function (done) {
+            request ('http://www.google.com', function (err, resp, body) {
+                if ( ! err && resp.statusCode == 200) {
+                    console.log (body);
+                    done ();
+                }
+            });
+        });
+    });
+
+/*
+    describe ("exec ()", function () {
+        it ("should execute using http against server", function (done) {
+            var url = new Url ({ scheme: 'https', host : 'www.google.com', path : "" });
+            var action = new Action ({ url: url });
+            var fetch = action.exec (done);
+        });
+    });
+*/
+
+});
+

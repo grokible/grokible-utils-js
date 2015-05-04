@@ -136,6 +136,18 @@ describe ("Check (lib)", function () {
         });
     });
 
+
+    describe ("isUndefined (v)", function () {
+        it ("should return true for undefined, else throw", function () {
+           var x;
+           expect (Check.isUndefined (x)).to.equal (true);
+           expect (Check.isUndefined ()).to.equal (true);
+           TestExpect.throws (function () { Check.isUndefined (null) },
+               CheckException);
+        });
+    });
+
+
     describe ("hasClassOfObject ({})", function () {
         it ("should return true", function () {
            expect (Check.hasClassOfObject ({})).to.equal (true);

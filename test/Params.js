@@ -1,12 +1,13 @@
 
 var expect = require ('chai').expect;
 var Params = require ('Params');
+var TestExpect = require ('TestExpect');
+var ArgTypeException = require ('ArgTypeException');
 
 describe ("Params class", function () {
 
     describe ("constructor (config)", function () {
-        it ("should set internal config and leave targetObject undefined",
-        function () {
+        it ("should set internal conf and target undefined", function () {
             var pm = new Params ({ hello : "world" });
             var config = pm.getConfig ();
             expect (config).to.have.a.property ('hello', 'world');
@@ -71,6 +72,17 @@ describe ("Params class", function () {
             expect (obj).to.have.a.property ('_missing', 'why not');
             expect (Object.keys (obj)).to.have.length (1);
             expect (x).to.equal ('why not');
+        });
+    });
+
+    describe ("copy", function () {
+        it ("should throw if options is wrong type", function () {
+            var obj = {};
+            var pm = new Params ({ hello : "world", what : "else" }, obj);
+            var badOptions = 1;
+            TestExpect.throws (function () {
+                pm.copy ('missing', 'why not', badOptions);
+            }, ArgTypeException, /3rd arg [(]options[)] must be a map[.]/);
         });
     });
 

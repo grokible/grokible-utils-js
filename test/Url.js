@@ -55,20 +55,21 @@ describe ("Url class", function () {
     });
 
     /**
-     *   Can't properly test this without a local test server because of CORS
-     *   XMLHttpRequest cannot load http://www.google.com/. No
-     *   'Access-Control-Allow-Origin' header is present on the requested
-     *   resource. Origin 'http://localhost:9876' is therefore not allowed access.
+     *   Can't properly test this in a browser without a local test server
+     *   because of CORS XMLHttpRequest cannot load http://www.google.com/.
+     *   Error = No 'Access-Control-Allow-Origin' header is present on the
+     *   requested resource.
+     *
+     *   If this test is run in browser, and can turn off --web-security
+     *   this will work.
      */
-
 
     describe ("use Url in request call", function (done) {
         it ("should pull from google (at least 100 chars)", function (done) {
             request
             .get ('https://www.google.com')
-            // .set ('Access-Control-Allow-Origin', '*')
             .end (function (err, res) {
-                expect (err).to.be.undefined ();
+                expect (err).to.be.null;
                 expect (res.statusCode).to.equal (200);
                 expect(res.text.length).to.be.above (100);
                 done ();

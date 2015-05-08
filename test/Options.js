@@ -13,7 +13,7 @@ describe ("Options class", function () {
         });
     });
 
-    describe ("copy (options)", function () {
+    describe ("copy ()", function () {
         it ("Should make a shallow copy of a map", function () {
             var options = { hello : 'world', 'foo' : 5, 'x' : [ 'a', 'b' ] };
             var options2 = Options.copy (options);
@@ -37,12 +37,12 @@ describe ("Options class", function () {
         });
     });
 
-    describe ("merge ()", function () {
+    describe ("mergeTo ()", function () {
         it ("Should calculate and return merge of two optionss", function () {
             var options1 = { hello : 'world', 'foo' : 'bar' };
             var options2 = { hello : 'goodbye', 'baz' : 5 };
 
-            var options3 = Options.merge (options1, options2);
+            var options3 = Options.mergeTo (options1, options2);
 
             expect (Object.keys (options3)).to.have.length (3);
             expect (options3 ['hello']).to.equal ('world');

@@ -10,8 +10,8 @@ describe ("JqxGridWrapper object", function () {
         it ("should Check for column array", function () {
             var jquery = undefined;
             TestExpect.throws (function () {
-                new JqxGridWrapper (jquery, { columnNames : 1 });
-            }, ArgTypeException, /The value is not an array.*number/);
+                new JqxGridWrapper (jquery, { columnDefs : 1 });
+            }, ArgTypeException, /columnDefs config option is not a Map/);
         });
     });
 });

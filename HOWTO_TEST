@@ -1,0 +1,86 @@
+HOWTO TEST
+----------
+
+This is a complicated set of projects for aws cloud.  The current goal is:
+
+Have a webpage that calls a REST service for the AWS (mock, .cache)
+data, and use this to generate a table, which is jqwidget UI
+(jquery plugin).
+
+This currently works!  But you need two servers running and the
+browser running in no security mode.
+
+HOW TO RUN THE SOFTWARE
+-----------------------
+
+    $ aws_cloud/start - the REST server (using falcon/python) which
+      serves up pre-fetched data from the .cache directory.
+
+    $ javascript/jqwidgets/start - the python SimpleHTTPServer which
+      serves up the widget page (roger_spreadsheet.html)
+
+    Start the chrome browser without web security:  Use the alias:
+
+    $ chrome_no_security
+
+    Point browser to URL:  http://localhost:10000/roger_spreadsheet.html
+
+HOW TO EDIT/COMPILE/DEBUG
+-------------------------
+
+    1. Changes to the connective tissue that gets the grid ready can
+       generally be made by editing roger_spreadsheet.html in the
+       javascript/jqwidgets directory and reloading the page in the browser.
+
+    2. If a change must be made to the grokible utils library, make the
+       change, potentially make a test, and do:
+
+       $ make build
+
+       This will create a new grokible-util-build.js file which the
+       roger_spreadsheet.html loads directly.  Reload the page.
+
+    3. Making a new class/library file in grokible utils, requires
+       putting the new .js in lib dir, and also symlinking from
+       node_modules.
+
+
+USING WEBSTORM IDE (JETBRAINS)
+------------------------------
+    This works pretty well currently for running mocha tests and putting
+    breakpoints.  To setup the project, I just opened the files.
+    To run the debugger with mocha, choose:  Menu:Run::Debug::Mocha.
+    Note that you should stop the debugger when done, or it may become
+    detached and block the port on restart (requiring restart of IDE).
+
+
+
+This requires:
+
+   Running falcon/python server for the REST service (aws_cloud).  This
+   may not be the best choice (not sure about CORS support).  This is
+   the data service backend.  This is in python/aws_cloud dir.
+
+   Running python SimpleHTTPServer to serve up some pages with
+   jqxwidgets.  This is in javascript/jqxwidgets dir.  The test page
+   is roger_spreadsheet.html.  It can be reached at:
+
+       http://localhost:10000/roger_spreadsheet.html
+
+   In order for this to work same origin policy must be turned off.
+   So launch Chrome like this:  chrome_no_security.
+
+   This uses our browserified base libraries from 
+   node/grokible-utils-js.
+   to rebuild these (if anything changes) do:  make build
+
+   to start the servers:
+       aws_cloud/start
+       javascript/jqwidgets/start
+
+
+
+
+
+
+

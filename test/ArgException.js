@@ -17,5 +17,15 @@ describe ("ArgException class", function () {
         });
     });
 
+    describe ("constructor without new", function () {
+        it ("should set message and inherit from Error", function () {
+            var exc = ArgException ("hello");
+
+            TestExpect.inherits (exc, ArgException, CheckException,
+                { name: "ArgException", message: "hello" });
+        });
+    });
+
+
 });
 

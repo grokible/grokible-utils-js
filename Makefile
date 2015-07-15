@@ -45,7 +45,7 @@ browserify-tests: $(BRW_TESTS)
 
 
 test:
-	mocha $(TEST_SRCS)
+	node_modules/mocha/bin/mocha $(TEST_SRCS)
 
 clean:
 	rm -f $(BRW_DIR)/$(TEST_DIR)/* $(BUILD_DIR)/grokible-utils-build.js

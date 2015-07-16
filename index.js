@@ -5,7 +5,6 @@ module.exports.ArgTypeException = require ('ArgTypeException');
 module.exports.ArgException = require ('ArgException');
 
 module.exports.QueryParamException = require ('./grokible.queryParamException');
-module.exports.Param = require ('./grokible.param');
 module.exports.ParamSpec = require ('./grokible.paramSpec');
 module.exports.QueryParamSpec = require ('./grokible.queryParamSpec');
 

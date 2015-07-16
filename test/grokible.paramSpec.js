@@ -28,7 +28,7 @@ describe ("ParamSpec", function () {
         });
     });
 
-    describe ("get ('weight'), number arg", function () {
+    describe ("get (number)", function () {
         var args = { weight: 205.2 };
         var spec = { weight: { type: 'number', default: 10.2 } };
 
@@ -79,11 +79,11 @@ describe ("ParamSpec", function () {
         });
     });
 
-    describe ("get (missing), should throw an exception", function () {
+    describe ("get (missing-arg)", function () {
         var args = { };
         var spec = { missing: { type: 'integer' } };
 
-        it ("should throw exception if missing", function () {
+        it ("should throw exception if missing arg", function () {
             var ps = ParamSpec (args, spec);
 
             TestExpect.throws (function () {
@@ -92,11 +92,11 @@ describe ("ParamSpec", function () {
         });
     });
 
-    describe ("get (missing)", function () {
+    describe ("get (missing-arg)", function () {
         var args = { };
         var spec = { missing: { type: 'integer' } };
 
-        it ("should throw passed exception type if missing", function () {
+        it ("should throw passed exception type if missing arg", function () {
 	    var opt = { exception: QueryParamException };
             var ps = ParamSpec (args, spec, opt);
 
@@ -105,6 +105,21 @@ describe ("ParamSpec", function () {
             }, QueryParamException, /No argument found named/);
         });
     });
+
+    describe ("get (missing-spec)", function () {
+        var args = { othermissing: 'foobar' };
+        var spec = { missing: { type: 'integer' } };
+
+        it ("should throw exception if missing spec", function () {
+            var ps = ParamSpec (args, spec);
+
+            TestExpect.throws (function () {
+                var x = ps.get ('othermissing');
+            }, ArgException, /No spec 'othermissing'/);
+        });
+    });
+
+
 
     describe ("get (flag)", function () {
         var args = { debug: "" };  // this.query will bring flag in as ""

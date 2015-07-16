@@ -6,6 +6,8 @@ var ArgException = require ('ArgException');
 var ArgTypeException = require ('ArgTypeException');
 var QueryParamException = require ('./grokible.queryParamException');
 
+var format = require ('string-format').extend (String.prototype);
+
 var ParamSpec = function (args, spec, opt) {
     var obj = Inherits.superCreateNewIgnored (ParamSpec, Object);
     obj._args = args;
@@ -37,7 +39,7 @@ ParamSpec.prototype.get = function (name) {
     if (name in this._spec)
 	spec = this._spec [name];
     else
-	throw exCtor ("No spec name='" + name + "' in ParamSpec", exopt);
+	throw exCtor ("No spec '{}' in ParamSpec".format (name), exopt);
 
     if ('default' in spec)
         v = spec ['default'];

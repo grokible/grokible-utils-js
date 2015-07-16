@@ -4,7 +4,7 @@
   "description": "Grokible Javascript Utility Library",
   "main": "index.js",
   "dependencies": {
-    "superagent": "^1.2.0"
+    "string-format": "^0.5.0"
   },
   "devDependencies": {
     "browserify": "^9.0.8",

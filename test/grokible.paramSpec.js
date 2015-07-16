@@ -6,7 +6,7 @@ var expect = require ('chai').expect;
 var TestExpect = require ('TestExpect');
 var Exception = require ('Exception');
 var ArgException = require ('ArgException');
-var QueryParamException = require ('QueryParamException');
+var QueryParamException = require ('../grokible.queryParamException');
 
 describe ("ParamSpec", function () {
 
@@ -45,7 +45,7 @@ describe ("ParamSpec", function () {
         });
     });
 
-    describe ("get ('weight'), string arg", function () {
+    describe ("get (string) for number spec", function () {
         var args = { weight: '205.2' };
         var spec = { weight: { type: 'number', default: '10.2' } };
 
@@ -62,7 +62,7 @@ describe ("ParamSpec", function () {
         });
     });
 
-    describe ("get ('weight'), string arg", function () {
+    describe ("get (string), for integer spec", function () {
         var args = { age: '10' };
         var spec = { age: { type: 'integer', default: 20 } };
 
@@ -79,7 +79,7 @@ describe ("ParamSpec", function () {
         });
     });
 
-    describe ("get ('missing'), should throw an exception", function () {
+    describe ("get (missing), should throw an exception", function () {
         var args = { };
         var spec = { missing: { type: 'integer' } };
 
@@ -92,11 +92,11 @@ describe ("ParamSpec", function () {
         });
     });
 
-    describe ("get ('missing'), should throw opt:exception ", function () {
+    describe ("get (missing)", function () {
         var args = { };
         var spec = { missing: { type: 'integer' } };
 
-        it ("should throw exception if missing", function () {
+        it ("should throw passed exception type if missing", function () {
 	    var opt = { exception: QueryParamException };
             var ps = ParamSpec (args, spec, opt);
 
@@ -106,7 +106,24 @@ describe ("ParamSpec", function () {
         });
     });
 
+    describe ("get (flag)", function () {
+        var args = { debug: "" };  // this.query will bring flag in as ""
+        var spec = { debug: { type: 'flag' } };
 
+        it ("should return true if present", function () {
+            var ps = ParamSpec (args, spec);
+	    var x = ps.get ('debug');
+	    expect (x).to.be.true;
+        });
+
+        it ("should return false if not present", function () {
+            var args = {};
+            var ps = ParamSpec (args, spec);
+	    var x = ps.get ('debug');
+	    expect (x).to.be.false;
+        });
+
+    });
 
 });
 

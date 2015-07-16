@@ -1,6 +1,6 @@
 
 var Check = require ('Check');
-var QueryParamException = require ('QueryParamException');
+var QueryParamException = require ('./grokible.queryParamException');
 
 var getDefault = function (opt) {
     var v;

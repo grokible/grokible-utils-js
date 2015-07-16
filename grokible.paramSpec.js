@@ -6,10 +6,11 @@ var ArgException = require ('ArgException');
 var ArgTypeException = require ('ArgTypeException');
 var QueryParamException = require ('QueryParamException');
 
-var ParamSpec = function (args, spec) {
+var ParamSpec = function (args, spec, opt) {
     var obj = Inherits.superCreateNewIgnored (ParamSpec, Object);
     obj._args = args;
     obj._spec = spec;
+    obj._opt = opt;
     return obj;
 };
 
@@ -19,12 +20,15 @@ ParamSpec.prototype.setArgs = function (args) { this._args = args }
 ParamSpec.prototype.getSpec = function () { return this._spec }
 ParamSpec.prototype.setSpec = function (spec) { this._spec = spec }
 
-ParamSpec.prototype.get = function (name, opt) {
+ParamSpec.prototype.getOpt = function () { return this._opt }
+ParamSpec.prototype.setOpt = function (opt) { this._opt = opt }
+
+ParamSpec.prototype.get = function (name) {
     var v, v2, arg, spec, type, v_type;
     var exCtor;
 
-    if (opt && ('exception' in opt))
-	exCtor = opt ['exception'];
+    if (this._opt && ('exception' in this._opt))
+	exCtor = this._opt ['exception'];
     else
 	exCtor = ArgException;
 

@@ -97,11 +97,11 @@ describe ("ParamSpec", function () {
         var spec = { missing: { type: 'integer' } };
 
         it ("should throw exception if missing", function () {
-            var ps = ParamSpec (args, spec);
+	    var opt = { exception: QueryParamException };
+            var ps = ParamSpec (args, spec, opt);
 
             TestExpect.throws (function () {
-                var x = ps.get ('missing',
-                    { exception: QueryParamException });
+                var x = ps.get ('missing')
             }, QueryParamException, /No argument found named/);
         });
     });

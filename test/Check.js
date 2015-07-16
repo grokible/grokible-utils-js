@@ -113,7 +113,8 @@ describe ("Check", function () {
     describe ("inArray ()", function () {
         it ("should return true if element is in Array", function () {
             expect (Check.inArray (1, [1,2])).to.be.true;
-            expect (Check.inArray ("hi", ["cruel", "world", "hi"])).to.be.true;
+            expect (Check.inArray
+                ("hi", ["cruel", "world", "hi"])).to.be.true;
         });
 
         it ("should throw exception if element not in Array", function () {
@@ -122,7 +123,8 @@ describe ("Check", function () {
             }, CheckException, /The value 'hello' is not in the array./);
         });
 
-        it ("should return false if not in Arr & throws = false", function () {
+        it ("should return false if not in Arr & throws = false",
+        function () {
             expect (Check.inArray ("hello", [1,2],
                 { throws : false })).to.be.false;
         });
@@ -135,7 +137,8 @@ describe ("Check", function () {
             }, CheckException, /Value '1.1' is not an integer./);
         });
 
-        it ("should throw exception on non-number (e.g. string)", function () {
+        it ("should throw exception on non-number (e.g. string)",
+        function () {
             TestExpect.throws (function () {
                 Check.isInteger ("hello")
             }, CheckException, /Value 'hello' is not an integer./);
@@ -151,6 +154,48 @@ describe ("Check", function () {
            expect (Check.isInteger (1.1, options)).to.equal (false);
            expect (Check.isInteger (undefined, options)).to.equal (false);
            expect (Check.isInteger (null, options)).to.equal (false);
+        });
+    });
+
+    describe ("isString ()", function () {
+        it ("should throw exception on non-string", function () {
+            TestExpect.throws (function () {
+                Check.isString (1.1)
+            }, CheckException, /Value '1.1' is not a string./);
+        });
+
+        it ("should not throw exception on string", function () {
+            Check.isString ("hello");
+        });
+
+        it ("should not throw an exception, if optThrows false", function () {
+           var options = { throws : false };
+           expect (Check.isString (1, options)).to.equal (false);
+           expect (Check.isString (undefined, options)).to.equal (false);
+           expect (Check.isString (null, options)).to.equal (false);
+        });
+    });
+
+
+    describe ("isNumber ()", function () {
+        it ("should throw exception on non-number", function () {
+            TestExpect.throws (function () {
+                Check.isNumber ("what");
+            }, CheckException, /Value 'what' is not a number./);
+        });
+
+        it ("should not throw exception on string", function () {
+            Check.isNumber (1.1);
+            Check.isNumber (1.0);
+            Check.isNumber (1);
+        });
+
+        it ("should not throw an exception, if optThrows false", function () {
+           var options = { throws : false };
+           expect (Check.isNumber ("hi", options)).to.equal (false);
+           expect (Check.isNumber (NaN, options)).to.equal (false);
+           expect (Check.isNumber (undefined, options)).to.equal (false);
+           expect (Check.isNumber (null, options)).to.equal (false);
         });
     });
 

@@ -55,7 +55,7 @@ ParamSpec.prototype.get = function (name) {
     // no argument passed.  Flags, will be undefined if not passed.
 
     if (v === undefined && type != 'flag')
-        throw exCtor ("No argument found named '" + name + "'", exopt);
+        throw exCtor ("No arg found named '{}'".format (name), exopt);
 
     v_type = typeof v;
 
@@ -72,8 +72,8 @@ ParamSpec.prototype.get = function (name) {
             else if (type === 'flag')
 		v2 = true;  // anything with flag should be true
         } catch (e) {
-	    msg = "Failed attempting to convert string value '" + v +
-                "' to type " + type;
+	    msg = "Failed attempting to convert string value '{}' to type {}";
+	    msg.format (v, type);
 	    throw exCtor (msg, exopt);
         }
     } else if (v_type === 'undefined') {
@@ -81,15 +81,14 @@ ParamSpec.prototype.get = function (name) {
 	    v2 = name in this._args;
 	else
 	    throw ArgException ("Undefined value only allowed on 'flag' " +
-	        "not type=" + type, exopt);
+                "not type={}".format (type), exopt);
     } else {
 	// not a string arg, so no coercion
         v2 = v;
     }
 
     // v2 now holds the typed thing, check it
-    msg = "Expected query param '" + name + "=" + arg + "' to be a " +
-        type + ".";
+    msg = "Expected query param '{}={}' to be a {}.".format (name, arg, type);
 
     try {
 	if (type === 'string')
@@ -101,7 +100,8 @@ ParamSpec.prototype.get = function (name) {
 	else if (type === 'flag') {
 	    // Do nothing, as we coerced the value to true/false
 	} else
-	    throw ArgException ("Spec '" + name + "' unknown type " + type);
+	    throw ArgException ("Spec '{}' unknown type {}".format
+                (name, type));
     } catch (e) {
 	e.setOpt (exopt);
 	throw e;

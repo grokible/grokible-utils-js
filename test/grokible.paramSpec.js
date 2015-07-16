@@ -88,7 +88,7 @@ describe ("ParamSpec", function () {
 
             TestExpect.throws (function () {
                 var x = ps.get ('missing');
-            }, ArgException, /No argument found named/);
+            }, ArgException, /No arg found named/);
         });
     });
 
@@ -102,7 +102,7 @@ describe ("ParamSpec", function () {
 
             TestExpect.throws (function () {
                 var x = ps.get ('missing')
-            }, QueryParamException, /No argument found named/);
+            }, QueryParamException, /No arg found named/);
         });
     });
 

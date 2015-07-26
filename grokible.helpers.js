@@ -53,4 +53,15 @@ var arrayForEachPolyfill = function (callback, thisArg) {
     // 8. return undefined
 };
 
-module.exports.ArrayForEach = arrayForEachPolyfill;
+var function extend = (obj, src) {
+    for (var key in src)
+        if (src.hasOwnProperty (key)) obj [key] = src [key];
+
+    return obj;
+}
+
+module.exports.arrayForEach = arrayForEachPolyfill;
+module.exports.extend = extend;
+
+
+

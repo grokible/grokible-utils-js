@@ -10,4 +10,5 @@ module.exports.QueryParamException =
 module.exports.ParamSpec = require ('./grokible.paramSpec');
 module.exports.QueryParamSpec = require ('./grokible.queryParamSpec');
 module.exports.HttpException = require ('./grokible.httpException');
+module.exports.Helpers = require ('./grokible.helpers');
 

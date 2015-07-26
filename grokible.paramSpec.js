@@ -10,7 +10,7 @@ var format = require ('string-format').extend (String.prototype);
 
 var ParamSpec = function (args, spec, opt) {
     var obj = Inherits.superCreateNewIgnored (ParamSpec, Object);
-    obj._args = args;
+    obj._args = args === undefined ? {} : args;
     obj._spec = spec;
     obj._opt = opt;
     return obj;

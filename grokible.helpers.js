@@ -12,7 +12,7 @@
  *         require ('grokible.arrayForEachPolyfill.js').ArrayForEach;
  */
 
-var arrayForEachPolyfill = function (callback, thisArg) {
+var arrayForEach = function (callback, thisArg) {
 
     var T, k;
 
@@ -53,15 +53,120 @@ var arrayForEachPolyfill = function (callback, thisArg) {
     // 8. return undefined
 };
 
-var extend = function (obj, src) {
-    for (var key in src)
-        if (src.hasOwnProperty (key)) obj [key] = src [key];
+/* Set polyfill on Array forEach */
+if ( ! Array.prototype.forEach)
+    Array.prototype.forEach = Helpers.arrayForEach;
 
-    return obj;
+var extend = function (targetObj, srcDict) {
+    for (var k in srcDict)
+        if (srcDict.hasOwnProperty (k))
+            targetObj [k] = srcDict [k];
+
+    return targetObj;
 }
 
-module.exports.arrayForEach = arrayForEachPolyfill;
+var copyKeys = function (targetObj, srcDict, arrOfKeys, cbMissing) {
+    var k;
+    for (var i = 0, len = arrOfKeys.length; i < len; i++) {
+        k = arrOfKeys [i];
+        if (srcDict.hasOwnProperty (k)) {
+            targetObj [k] = srcDict [k];
+        } else if (cbMissing) {
+            /* TODO - we should default to throwing an exception and/or
+               check for exception type */
+        }
+    }
+
+    return targetObj;
+}
+
+/**
+ * arr is an array of names.  Creates a copy and selects the properties.
+ * If missing, and cbError defined, will return undefined.
+ */
+var select = function (obj, arrOfNames, cbError) {
+    var ok = true;
+    var rv = {};
+    arrOfNames.forEach (function (name) {
+        if (obj.hasOwnProperty (name))
+            rv [name] = obj [name];
+        else if ( ! (cbError === undefined)) {
+            ok = false;
+            cbError (name);
+        }
+    });
+
+    return ok ? rv : undefined;
+}
+
+/**
+ * Shallow compare of 2 arrays.
+ */
+var arraysAreIdentical = function (arr1, arr2) {
+    if (arr1.length !== arr2.length)
+        return false;
+
+    for (var i = 0, len = arr1.length; i < len; i++) {
+        if (arr1 [i] !== arr2 [i])
+            return false;
+    }
+
+    return true; 
+}
+
+/**
+ * Shallow compare of 2 dictionaries.
+ */
+var dictsAreIdentical = function (dict1, dict2) {
+    if (Object.keys (dict1).length != Object.keys (dict2).length)
+        return false;
+
+    for (var p in dict1) {
+        if (dict1.hasOwnProperty (p))
+            if ( ! (p in dict2 && dict2 [p] === dict1 [p]))
+                return false;
+    }
+
+    return true; 
+}
+
+/**
+ * Returns true if has dict has exact same keys as in arrOfKeys, otherwise
+ * false.  If cbMissing and/or cbExtra defined, will call these with the
+ * missing and extra key, resp.
+ */
+var hasIdenticalKeys = function (dict, arrOfKeys, cbMissing, cbExtra) {
+    var k, keyDict = {};
+    var same = true;
+    for (var i = 0, len = arrOfKeys.length; i < len; i++) {
+        k = arrOfKeys [i];
+        keyDict [k] = 1;
+        if ( ! (k in dict))
+            if (cbMissing) {
+                cbMissing (k);
+                same = false;
+            }
+    }
+
+    /* in dict but not in array */
+    for (var p in dict) {
+        if (dict.hasOwnProperty (p) && ( ! (p in keyDict))) {
+            if (cbExtra)
+                cbExtra (p);
+            same = false;
+        }
+    }
+
+    return same;
+}
+
+
+module.exports.arraysAreIdentical = arraysAreIdentical;
+module.exports.dictsAreIdentical = dictsAreIdentical;
+module.exports.hasIdenticalKeys = hasIdenticalKeys;
+module.exports.arrayForEach = arrayForEach;
 module.exports.extend = extend;
+module.exports.select = select;
 
 
 

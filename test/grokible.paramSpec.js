@@ -39,7 +39,7 @@ describe ("ParamSpec", function () {
 	    var x = ps.get ('weight');
 	    expect (x).to.equal (205.2);
 
-	    ps.setArgs ({});
+	    ps.setArgsUsingArgsOrContext ({});
 	    x = ps.get ('weight');
 	    expect (x).to.equal (10.2);
         });
@@ -56,7 +56,7 @@ describe ("ParamSpec", function () {
 	    var x = ps.get ('weight');
 	    expect (x).to.equal (205.2);
 
-	    ps.setArgs ({});
+	    ps.setArgsUsingArgsOrContext ({});
 	    x = ps.get ('weight');
 	    expect (x).to.equal (10.2);
         });
@@ -73,7 +73,7 @@ describe ("ParamSpec", function () {
 	    var x = ps.get ('age');
 	    expect (x).to.equal (10);
 
-	    ps.setArgs ({});
+	    ps.setArgsUsingArgsOrContext ({});
 	    x = ps.get ('age');
 	    expect (x).to.equal (20);
         });

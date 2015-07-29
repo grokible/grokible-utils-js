@@ -2,6 +2,7 @@
 
 module.exports.Check = require ('Check');
 module.exports.ExceptionUtils = require ('./grokible.exceptionUtils');
+module.exports.Exception = require ('Exception');
 module.exports.ArgTypeException = require ('ArgTypeException');
 module.exports.ArgException = require ('ArgException');
 

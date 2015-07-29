@@ -5,19 +5,52 @@ var Check = require ('Check');
 var ArgException = require ('ArgException');
 var ArgTypeException = require ('ArgTypeException');
 var QueryParamException = require ('./grokible.queryParamException');
+var Helpers = require ('./grokible.helpers');
+
+var extend = Helpers.extend;
 
 var format = require ('string-format').extend (String.prototype);
 
-var ParamSpec = function (args, spec, opt) {
+var ParamSpec = function (argsOrContext, spec, opt) {
     var obj = Inherits.superCreateNewIgnored (ParamSpec, Object);
-    obj._args = args === undefined ? {} : args;
     obj._spec = spec;
     obj._opt = opt;
+    obj.setArgsUsingArgsOrContext (argsOrContext);
     return obj;
 };
 
 ParamSpec.prototype.getArgs = function () { return this._args }
-ParamSpec.prototype.setArgs = function (args) { this._args = args }
+
+/**
+ * Allows setting using either a arg dictionary ('args') or using a
+ * Koa Context (something with a dict named 'query' and/or a set of
+ * fields as in this.request.body.fields as would be set by 
+ * koa-better-body (parsed POST data fields).
+ */
+ParamSpec.prototype.setArgsUsingArgsOrContext = function (argsOrContext) {
+    var isContext = false;
+    this._args = {};
+
+    if (argsOrContext === undefined)
+        return;
+
+    if ('query' in argsOrContext) {
+        isContext = true;
+        extend (this._args, argsOrContext.query);
+    }
+        
+
+    if ('request' in argsOrContext && 'body' in argsOrContext.request &&
+        'fields' in argsOrContext.request.body) {
+        isContext = true;
+        extend (this._args, argsOrContext.request.body.fields);
+    }
+
+    /* Not context so must be plain args */
+
+    if ( ! isContext)
+        this._args = argsOrContext;
+}
 
 ParamSpec.prototype.getSpec = function () { return this._spec }
 ParamSpec.prototype.setSpec = function (spec) { this._spec = spec }

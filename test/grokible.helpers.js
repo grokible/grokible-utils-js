@@ -7,7 +7,6 @@ var arraysAreIdentical = Helpers.arraysAreIdentical;
 var dictsAreIdentical = Helpers.dictsAreIdentical;
 var select = Helpers.select;
 
-
 var expect = require ('chai').expect;
 var TestExpect = require ('TestExpect');
 var Exception = require ('Exception');
@@ -81,15 +80,30 @@ describe ("Helpers", function () {
         });
     });
 
-
     describe ("select", function () {
-        it ("if item is not listed, and cbError, call and return undefined",
+        it ("if item is not listed, cbError is a function, call missing",
         function () {
             var errorCalled = false;
             var dict = { hello: "world", what: "now", not: "chosen" };
             var dict2 = select (dict, ['hello', 'there'], function (err) {
                 errorCalled = true;
             });
+      	    expect (dictsAreIdentical (dict2, { hello: 'world' })).to.be.true;
+      	    expect (errorCalled).to.be.true;
+        });
+    });
+
+    describe ("select", function () {
+        it ("if item not listed, and cbError is an instanceof Error, throw",
+        function () {
+            var errorCalled = false;
+            var dict = { hello: "world", what: "now", not: "chosen" };
+
+            var dict2;
+            TestExpect.throws (function () {
+                dict2 = select (dict, ['hello', 'there'], true);
+            }, Error, /there/);
+
       	    expect (dict2).to.equal (undefined);
         });
     });

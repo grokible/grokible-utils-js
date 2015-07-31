@@ -23,11 +23,15 @@ describe ("HttpException class", function () {
     });
 
     describe ("constructor without new", function () {
-        it ("should set message and inherit from Exception", function () {
+        it ("should set message, inherit from Exception, and have name",
+        function () {
             var exc = HttpException ("hello");
 
             TestExpect.inherits (exc, HttpException, Exception,
                 { name: "HttpException", message: "hello" });
+
+            expect (exc.name).to.equal ("HttpException");
+            
         });
     });
 

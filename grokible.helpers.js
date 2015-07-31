@@ -65,34 +65,29 @@ var extend = function (targetObj, srcDict) {
     return targetObj;
 }
 
-var copyKeys = function (targetObj, srcDict, arrOfKeys, cbMissing) {
-    var k;
-    for (var i = 0, len = arrOfKeys.length; i < len; i++) {
-        k = arrOfKeys [i];
-        if (srcDict.hasOwnProperty (k)) {
-            targetObj [k] = srcDict [k];
-        } else if (cbMissing) {
-            /* TODO - we should default to throwing an exception and/or
-               check for exception type */
-        }
-    }
-
-    return targetObj;
-}
-
 /**
- * arr is an array of names.  Creates a copy and selects the properties.
- * If missing, and cbError defined, will return undefined.
+ * arrOfKeys is an array of names.  Creates a copy and selects the properties.
+ * If missing, and cbMissing defined, will return undefined.
  */
-var select = function (obj, arrOfNames, cbError) {
+var select = function (srcDict, arrOfKeys, cbMissing) {
     var ok = true;
     var rv = {};
-    arrOfNames.forEach (function (name) {
-        if (obj.hasOwnProperty (name))
-            rv [name] = obj [name];
-        else if ( ! (cbError === undefined)) {
-            ok = false;
-            cbError (name);
+    arrOfKeys.forEach (function (k) {
+        if (srcDict.hasOwnProperty (k))
+            rv [k] = srcDict [k];
+        else if (cbMissing) {
+            var msg = "Missing key = '" + k + "'";
+            /* does not work: */
+            /*
+            if (cbMissing instanceof Error) {
+                console.log ("in cbMissing, instanceof Error");
+                throw new cbMissing (msg);
+            } else
+            */
+            if (typeof cbMissing === 'function')
+                cbMissing (k);
+            else
+                throw new Error (msg);
         }
     });
 
@@ -127,7 +122,7 @@ var dictsAreIdentical = function (dict1, dict2) {
                 return false;
     }
 
-    return true; 
+    return true;
 }
 
 /**
@@ -161,12 +156,12 @@ var hasIdenticalKeys = function (dict, arrOfKeys, cbMissing, cbExtra) {
 }
 
 
-module.exports.arraysAreIdentical = arraysAreIdentical;
+
 module.exports.dictsAreIdentical = dictsAreIdentical;
 module.exports.hasIdenticalKeys = hasIdenticalKeys;
-module.exports.arrayForEach = arrayForEach;
 module.exports.extend = extend;
 module.exports.select = select;
 
-
+module.exports.arraysAreIdentical = arraysAreIdentical;
+module.exports.arrayForEach = arrayForEach;
 

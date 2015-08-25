@@ -2,9 +2,12 @@
 
 module.exports.Check = require ('Check');
 module.exports.ExceptionUtils = require ('./grokible.exceptionUtils');
+module.exports.Inherits = require ('Inherits');
 module.exports.Exception = require ('Exception');
 module.exports.ArgTypeException = require ('ArgTypeException');
 module.exports.ArgException = require ('ArgException');
+
+
 
 module.exports.QueryParamException =
     require ('./grokible.queryParamException');

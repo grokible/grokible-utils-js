@@ -3,7 +3,7 @@
  * An Exception object that inherits from Error.
  */
 
-var Inherits = require ('./grokible.inherits');
+var Inherits = require ('grokible.inherits.js');
 
 /**
  * constructor:  Exception ([message [, opt]])

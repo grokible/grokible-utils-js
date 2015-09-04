@@ -1,9 +1,9 @@
 
-var Inherits = require ('./grokible.inherits');
-var Check = require ('./grokible.check');
-var Helpers = require ('./grokible.helpers');
+var Inherits = require ('grokible.inherits.js');
+var Check = require ('grokible.check.js');
+var Helpers = require ('grokible.helpers.js');
 
-var Exceptions = require ('./grokible.exceptions');
+var Exceptions = require ('grokible.exceptions.js');
 var ArgException = Exceptions.ArgException;
 var ArgTypeException = Exceptions.ArgTypeException;
 var QueryParamException = Exceptions.QueryParamException;

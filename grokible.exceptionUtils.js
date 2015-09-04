@@ -1,6 +1,6 @@
 
-var Inherits = require ('./grokible.inherits');
-var Exception = require ('./grokible.exception');
+var Inherits = require ('grokible.inherits.js');
+var Exception = require ('grokible.exception.js');
 
 module.exports = {
     makeNewExceptionClass: function (newClassName, optParentClass) {

@@ -1,8 +1,8 @@
 
-var Inherits = require ('./grokible.inherits');
-var ParamSpec = require ('./grokible.paramSpec');
+var Inherits = require ('grokible.inherits.js');
+var ParamSpec = require ('grokible.paramSpec.js');
 
-var Exceptions = require ('./grokible.exceptions');
+var Exceptions = require ('grokible.exceptions.js');
 var QueryParamException = Exceptions.QueryParamException;
 
 var QueryParamSpec = function QueryParamSpec () {

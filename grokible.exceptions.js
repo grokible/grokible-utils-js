@@ -1,3 +1,4 @@
+
 var ExceptionUtils = require ('./grokible.exceptionUtils');
 
 var HttpException = ExceptionUtils.makeNewExceptionClass ('HttpException');

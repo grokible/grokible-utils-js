@@ -1,7 +1,5 @@
-// Describe.js
 
 var Describe = {};
-
 
 /**
  * A bulletproof function for returning a text description of what

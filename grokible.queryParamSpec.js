@@ -1,7 +1,7 @@
-'use strict';
 
 var Inherits = require ('./grokible.inherits');
 var ParamSpec = require ('./grokible.paramSpec');
+
 var Exceptions = require ('./grokible.exceptions');
 var QueryParamException = Exceptions.QueryParamException;
 

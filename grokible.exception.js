@@ -1,4 +1,3 @@
-'use strict';
 
 /**
  * An Exception object that inherits from Error.

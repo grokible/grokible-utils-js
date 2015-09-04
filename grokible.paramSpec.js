@@ -1,4 +1,3 @@
-'use strict';
 
 var Inherits = require ('./grokible.inherits');
 var Check = require ('./grokible.check');

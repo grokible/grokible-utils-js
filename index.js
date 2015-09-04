@@ -4,7 +4,8 @@ module.exports.ExceptionUtils = require ('./grokible.exceptionUtils');
 module.exports.Inherits = require ('./grokible.inherits');
 module.exports.Exception = require ('./grokible.exception');
 
-module.exports.Exceptions = require ('./grokible.exceptions');
+var Exceptions = require ('./grokible.exceptions');
+module.exports.Exceptions = Exceptions;
 module.exports.ArgTypeException = Exceptions.ArgTypeException;
 module.exports.ArgException = Exceptions.ArgException;
 module.exports.HttpException = Exceptions.HttpException;

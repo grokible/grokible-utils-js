@@ -1,8 +1,9 @@
 'use strict';
 
-var Inherits = require ('Inherits');
+var Inherits = require ('./grokible.inherits');
 var ParamSpec = require ('./grokible.paramSpec');
-var QueryParamException = require ('./grokible.queryParamException');
+var Exceptions = require ('./grokible.exceptions');
+var QueryParamException = Exceptions.QueryParamException;
 
 var QueryParamSpec = function QueryParamSpec () {
     // Copy first two mandatory args ('args', 'spec') and 3rd optional ('opt')

@@ -1,11 +1,13 @@
 'use strict';
 
-var Inherits = require ('Inherits');
-var Check = require ('Check');
-var ArgException = require ('ArgException');
-var ArgTypeException = require ('ArgTypeException');
-var QueryParamException = require ('./grokible.queryParamException');
+var Inherits = require ('./grokible.inherits');
+var Check = require ('./grokible.check');
 var Helpers = require ('./grokible.helpers');
+
+var Exceptions = require ('./grokible.exceptions');
+var ArgException = Exceptions.ArgException;
+var ArgTypeException = Exceptions.ArgTypeException;
+var QueryParamException = Exceptions.QueryParamException;
 
 var extend = Helpers.extend;
 

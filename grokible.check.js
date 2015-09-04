@@ -59,10 +59,12 @@
  *  the exception to decide what to do.
  */
 
-var Options = require ('Options');
-var Describe = require ('Describe');
-var CheckException = require ('CheckException');
-var ArgTypeException = require ('ArgTypeException');
+var Options = require ('./grokible.options');
+var Describe = require ('./grokible.describe');
+
+var Exceptions = require ('./grokible.exceptions');
+var CheckException = Exceptions.CheckException;
+var ArgTypeException = Exceptions.ArgTypeException;
 
 var Check = {};
 

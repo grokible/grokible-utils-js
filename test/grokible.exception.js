@@ -1,9 +1,9 @@
 'use strict';
 
-var Exception = require ('Exception');
+var Exception = require ('../grokible.exception');
 
 var expect = require ('chai').expect;
-var TestExpect = require ('TestExpect');
+var TestExpect = require ('../grokible.testExpect');
 
 describe ("Exception", function () {
 

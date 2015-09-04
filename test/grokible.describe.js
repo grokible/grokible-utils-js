@@ -3,7 +3,7 @@
 var expect = require ('chai').expect;
 var assert = require ('chai').assert;
 
-var Describe = require ('Describe');
+var Describe = require ('../grokible.describe');
 
 // TODO pass an object with no constructor through, and an object
 // with a nameless constructor through

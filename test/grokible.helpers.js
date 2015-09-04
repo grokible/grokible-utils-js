@@ -8,8 +8,8 @@ var dictsAreIdentical = Helpers.dictsAreIdentical;
 var select = Helpers.select;
 
 var expect = require ('chai').expect;
-var TestExpect = require ('TestExpect');
-var Exception = require ('Exception');
+var TestExpect = require ('../grokible.testExpect');
+var Exception = require ('../grokible.exception');
 
 /**
  * Note this tests HttpException which is defined using ExceptionUtils

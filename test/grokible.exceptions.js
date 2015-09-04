@@ -1,10 +1,12 @@
 'use strict';
 
-var HttpException = require ('../grokible.httpException');
+var Exceptions = require ('../grokible.exceptions');
+var HttpException = Exceptions.HttpException;
+var QueryParamException = Exceptions.QueryParamException;
 
 var expect = require ('chai').expect;
-var TestExpect = require ('TestExpect');
-var Exception = require ('Exception');
+var TestExpect = require ('../grokible.testExpect');
+var Exception = require ('../grokible.exception');
 
 /**
  * Note this tests HttpException which is defined using ExceptionUtils
@@ -31,7 +33,10 @@ describe ("HttpException class", function () {
                 { name: "HttpException", message: "hello" });
 
             expect (exc.name).to.equal ("HttpException");
-            
+
+	    expect (exc instanceof HttpException).to.be.true;
+	    expect (exc instanceof Exception).to.be.true;
+	    expect (exc.message).to.equal ("hello");
         });
     });
 
@@ -54,4 +59,34 @@ describe ("HttpException class", function () {
         });
     });
 });
+
+
+describe ("QueryParamException class", function () {
+
+    describe ("constructor (message)", function () {
+        it ("should set message and inherit from Error", function () {
+            var exc = new QueryParamException ("hello");
+
+            TestExpect.inherits (exc, QueryParamException, HttpException,
+                { name: "QueryParamException", message: "hello" });
+        });
+    });
+
+    describe ("constructor without new", function () {
+        it ("should set message, inherit from Exception, and have name",
+        function () {
+            var exc = QueryParamException ("hello");
+
+            TestExpect.inherits (exc, QueryParamException, HttpException,
+                { name: "QueryParamException", message: "hello" });
+
+            expect (exc.name).to.equal ("QueryParamException");
+	    expect (exc instanceof QueryParamException).to.be.true;
+	    expect (exc instanceof HttpException).to.be.true;
+	    expect (exc instanceof Exception).to.be.true;
+	    expect (exc.message).to.equal ("hello");            
+        });
+    });
+});
+
 

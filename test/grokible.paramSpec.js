@@ -3,10 +3,12 @@
 var ParamSpec = require ('../grokible.paramSpec');
 
 var expect = require ('chai').expect;
-var TestExpect = require ('TestExpect');
-var Exception = require ('Exception');
-var ArgException = require ('ArgException');
-var QueryParamException = require ('../grokible.queryParamException');
+var TestExpect = require ('../grokible.testExpect');
+var Exception = require ('../grokible.exception');
+
+var Exceptions = require ('../grokible.exceptions');
+var ArgException = Exceptions.ArgException;
+var QueryParamException = Exceptions.QueryParamException;
 
 describe ("ParamSpec", function () {
 

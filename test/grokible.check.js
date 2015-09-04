@@ -1,13 +1,15 @@
 'use strict';
 
-var Check = require ('Check');
+var Check = require ('../grokible.check');
 
 var expect = require ('chai').expect;
-var TestExpect = require ('TestExpect');
-var Exception = require ('Exception');
-var ArgTypeException = require ('ArgTypeException');
-var ArgException = require ('ArgException');
-var CheckException = require ('CheckException');
+var TestExpect = require ('../grokible.testExpect');
+var Exception = require ('../grokible.exception');
+
+var Exceptions = require ('../grokible.exceptions');
+var ArgTypeException = Exceptions.ArgTypeException;
+var ArgException = Exceptions.ArgException;
+var CheckException = Exceptions.CheckException;
 
 describe ("Check", function () {
 

@@ -1,6 +1,6 @@
 
 var expect = require ('chai').expect;
-var Options = require ('Options');
+var Options = require ('../grokible.options');
 
 describe ("Options class", function () {
 

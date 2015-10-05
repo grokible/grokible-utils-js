@@ -18,30 +18,17 @@ var arrayForEach = function (callback, thisArg) {
     if (this == null)
         throw new TypeError (' this is null or not defined');
 
-    // 1. Let O be the result of calling ToObject passing the |this| value
-    //    as the argument.
-
     var O = Object (this);
-
-    // 2. Let lenValue be the result of calling the Get internal method of
-    //    O with the argument "length".
-    // 3. Let len be ToUint32(lenValue).
-
     var len = O.length >>> 0;
-
-    // 4. If IsCallable(callback) is false, throw a TypeError exception.
-    //    See: http://es5.github.com/#x9.11
 
     if (typeof callback !== "function")
         throw new TypeError (callback + ' is not a function');
 
-    // 5. If thisArg was supplied, let T be thisArg; else let T be undefined.
     if (arguments.length > 1)
         T = thisArg;
 
     k = 0;
     while (k < len) {
-
         var kValue;
         if (k in O) {
             kValue = O[k];
@@ -49,12 +36,12 @@ var arrayForEach = function (callback, thisArg) {
         }
         k++;
     }
-    // 8. return undefined
 };
 
 /* Set polyfill on Array forEach */
-if ( ! Array.prototype.forEach)
-    Array.prototype.forEach = Helpers.arrayForEach;
+if ( ! Array.prototype.forEach) {
+    Array.prototype.forEach = arrayForEach;
+}
 
 var extend = function (targetObj, srcDict) {
     for (var k in srcDict)

@@ -81,6 +81,25 @@ describe ("ParamSpec", function () {
         });
     });
 
+    describe ("get (missing-arg-with-default-in-spec)", function () {
+        var args = { };
+        var spec = { missing_but_defaulted: { type: 'integer', default: 21 } };
+	
+        var ps = ParamSpec (args, spec);
+	var x = ps.get ('missing_but_defaulted');
+        expect (x).to.equal (21);
+    });
+
+    describe ("get (missing-arg-with-default-undef-in-spec)", function () {
+        var args = { };
+        var spec = { missing_but_defaulted_undef: { type: 'integer',
+            default: undefined } };
+	
+        var ps = ParamSpec (args, spec);
+	var x = ps.get ('missing_but_defaulted_undef');
+        expect (x).to.equal (undefined);
+    });
+
     describe ("get (missing-arg)", function () {
         var args = { };
         var spec = { missing: { type: 'integer' } };

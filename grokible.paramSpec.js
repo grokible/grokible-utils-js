@@ -12,6 +12,31 @@ var extend = Helpers.extend;
 
 var format = require ('string-format').extend (String.prototype);
 
+/**
+ * A 'spec'(ification) for params, passed in an associative array.
+ * Useful for implementing an "options" object for passing lots of,
+ * seldom used options to functions.  Example:
+ *
+ *     var ps = ParamSpec (opt, {
+ *         user_id: { type: 'integer', help: "Owner of rating" },
+ *         offset: { type: 'integer', default: 0,
+ *             help: "Offset into rows (LIMIT, zero based, default 0)" },
+ *         rows: { type: 'integer', default: 1,
+ *             help: "Max number of rows to return (LIMIT, default 1)." }
+ *     });
+ *
+ *     // setup an assoc array to pass to something else
+ *
+ *     var qopt ['replacements'] = {
+ *         user_id: ps.get ('user_id'),  // will throw if opt missing user_id
+ *         offset: ps.get ('offset'),    // won't throw since it is defaulted
+ *         rows: ps.get ('rows')
+ *     };
+ *
+ * Optional arguments can be achieved by having a default of (e.g.) undefined,
+ * and eliminating or deleting afterward.
+ */
+
 var ParamSpec = function (argsOrContext, spec, opt) {
     var obj = Inherits.superCreateNewIgnored (ParamSpec, Object);
     obj._spec = spec;
@@ -63,6 +88,8 @@ ParamSpec.prototype.get = function (name) {
     var v, v2, arg, spec, type, v_type;
     var exCtor, msg;
 
+    var isUndefinedDefault = false;
+
     var exopt = { spec: this._spec };
 
     if (this._opt && ('exception' in this._opt))
@@ -75,8 +102,15 @@ ParamSpec.prototype.get = function (name) {
     else
 	throw exCtor ("No spec '{}' in ParamSpec".format (name), exopt);
 
-    if ('default' in spec)
+    if ('default' in spec) {
         v = spec ['default'];
+	// isUndefinedDefault is set to differentiate between an unset v,
+        // which is not found in the args, and one that has a spec default
+        // set to undefined, which is used to implement an "optional param".
+
+	if (v == undefined)
+	    isUndefinedDefault = true; 
+    }
 
     if (name in this._args) {
 	arg = this._args [name];
@@ -88,11 +122,11 @@ ParamSpec.prototype.get = function (name) {
     // If v is undefined at this point, it means there was no default and
     // no argument passed.  Flags, will be undefined if not passed.
 
-    if (v === undefined && type != 'flag')
+    if (v === undefined && type != 'flag' && ! isUndefinedDefault)
         throw exCtor ("No arg found named '{}'".format (name), exopt);
 
     v_type = typeof v;
-
+    
 
     // Coercion (e.g. coerce string to other type by parsing)
     if (v_type === 'string') {
@@ -111,11 +145,15 @@ ParamSpec.prototype.get = function (name) {
 	    throw exCtor (msg, exopt);
         }
     } else if (v_type === 'undefined') {
-	if (type === 'flag')
+	if (type === 'flag') {
 	    v2 = name in this._args;
-	else
+	} else if (isUndefinedDefault) {
+	    v2 = undefined;
+	} 
+        else {
 	    throw ArgException ("Undefined value only allowed on 'flag' " +
                 "not type={}".format (type), exopt);
+        }
     } else {
 	// not a string arg, so no coercion
         v2 = v;
@@ -124,24 +162,48 @@ ParamSpec.prototype.get = function (name) {
     // v2 now holds the typed thing, check it
     msg = "Expected query param '{}={}' to be a {}.".format (name, arg, type);
 
+    // val is undefined from spec default, avoid type check below by returning
+    if (isUndefinedDefault)
+	return v2;
+
     try {
-	if (type === 'string')
-	    Check.isString (v2, { exception: exCtor, message: msg });
-	else if (type === 'number')
+        if (type === 'string')
+            Check.isString (v2, { exception: exCtor, message: msg });
+        else if (type === 'number')
 	    Check.isNumber (v2, { exception: exCtor, message: msg });
-	else if (type === 'integer')
-	    Check.isInteger (v2, { exception: exCtor, message: msg });
-	else if (type === 'flag') {
-	    // Do nothing, as we coerced the value to true/false
-	} else
-	    throw ArgException ("Spec '{}' unknown type {}".format
+        else if (type === 'integer')
+            Check.isInteger (v2, { exception: exCtor, message: msg });
+        else if (type === 'flag') {
+            // NoOp as we coerced the value to true/false
+        } else
+            throw ArgException ("Spec '{}' unknown type {}".format
                 (name, type));
     } catch (e) {
 	e.setOpt (exopt);
-	throw e;
+        throw e;
     }
     
     return v2;
+}
+
+/**
+ * Useful for handling "optional options" (i.e. options that if not
+ * present in args and are not defaulted do not throw).  Example:
+ *
+ *     var ps = ParamSpec (opt, {
+ *         poi_name: { type: 'string', default: undefined }
+ *     });
+ *
+ *     var arr = { some: 'thing' };
+ *     ps.setIfDefined (arr, 'poi_name');  // adds only if value is defined
+ */
+ParamSpec.prototype.setIfDefined = function (arr, name) {
+    var x = this.get (name);
+
+    if ( ! (x == undefined))
+	arr [name] = x;
+
+    return x;
 }
 
 module.exports = ParamSpec;
